@@ -45,13 +45,6 @@ sequelize
             User.create({ uid: 2, name: "Samantha" }).then(ins => {
               console.log("added user successfuly");
             });
-            User.create({ uid: 1, name: "Jack" }).then(ins => {
-              console.log("added user successfuly");
-            });
-            
-            User.create({ uid: 2, name: "Michael" }).then(ins => {
-              console.log("added user successfuly");
-            });
         }
         // console.log("All users:", JSON.stringify(users, null, 4));
     });
@@ -60,7 +53,7 @@ sequelize
 })
 
 
-app.get('/api/get_user', (req, res) => {    
+app.get('/api/get_user', (req, res) => {      
     User.findAll({ where: {name: req.query.name} }).then(user => {
       //console.log(user);
         // project will be the first entry of the Projects table with the title 'aProject' || null
@@ -69,7 +62,10 @@ app.get('/api/get_user', (req, res) => {
         } else {
           res.end('USER NOT FOUND')
         }
-    })
+    }).catch(err=>{
+      console.log("ERROR", err);
+      res.end(err)
+    })    
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
